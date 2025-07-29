@@ -1,0 +1,81 @@
+import { useState } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './form';
+import { Input } from './input';
+import type { Control, FieldValues, Path } from 'react-hook-form';
+import { cn } from '@/lib/utils';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+
+type InputFieldTProps<T extends FieldValues> = {
+  name: Path<T>;
+  label?: string;
+  description?: string;
+  control: Control<T>;
+  icon?: ReactNode;
+} & ComponentProps<typeof Input>;
+
+export function InputField<T extends FieldValues>({
+  name,
+  label,
+  control,
+  description,
+  icon,
+  type,
+  className,
+  ...props
+}: InputFieldTProps<T>) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const isPassword = type === 'password';
+  const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
+
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          {label && <FormLabel>{label}</FormLabel>}
+          <FormControl>
+            <div className="relative">
+              {icon && (
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  {icon}
+                </div>
+              )}
+              <Input
+                type={inputType}
+                className={cn(
+                  icon && 'pl-10',
+                  isPassword && 'pr-10',
+                  className
+                )}
+                {...props}
+                {...field}
+              />
+              {isPassword && (
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                </button>
+              )}
+            </div>
+          </FormControl>
+          {description && <FormDescription>{description}</FormDescription>}
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+}

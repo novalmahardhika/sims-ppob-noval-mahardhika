@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import logoImage from '../../assets/images/logo-sims.png'
 
 type LogoProps = {
   size?: 'sm' | 'base'
@@ -8,7 +9,7 @@ export function Logo({ size = 'base' }: LogoProps) {
   return (
     <span className='flex gap-1.5 items-center'>
       <img
-        src="/src/assets/images/logo-sims.png"
+        src={logoImage}
         alt="logo"
         className={cn('w-7 aspect-square', size === 'sm' && 'w-6')}
       />

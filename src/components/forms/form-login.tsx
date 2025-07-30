@@ -28,7 +28,7 @@ export default function FormLogin() {
     if (loginUser.fulfilled.match(result)) {
       toast.success("Register berhasil")
       form.reset()
-      dispatch(fetchCurrentUser())
+      await dispatch(fetchCurrentUser())
     } else {
       const error = result.payload as ErrorPayload
       toast.error(error.message)

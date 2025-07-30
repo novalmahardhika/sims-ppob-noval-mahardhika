@@ -6,6 +6,8 @@ import { useAppSelector } from "@/lib/hooks/use-app-selector"
 import { formatCurrency } from "@/lib/format"
 import { useEffect } from "react"
 import { fetchBalance } from "@/lib/features/balance/balance-slice"
+import backgroundBalance from '../../src/assets/images/background-balance.png'
+import avatar from '../../src/assets/images/avatar.png'
 
 export function UserInfo() {
   const { user } = useAuth()
@@ -22,18 +24,19 @@ export function UserInfo() {
         <Avatar className="w-12 h-12">
           <AvatarImage src={user?.profile_image} className="w-20 aspect-square" />
           <AvatarFallback>
-            <img src="/src/assets/images/avatar.png" alt="avatar" />
+            <img src={avatar} alt="avatar" />
           </AvatarFallback>
         </Avatar>
         <div>
           <p>Selamat Datang,</p>
-          <h1 className="font-medium text-3xl">Kristanto Wibowo</h1>
+          <h1 className="font-medium text-3xl">{`${user?.first_name} ${user?.last_name}`}</h1>
         </div>
       </section>
 
       <section
         className="relative h-35.5 flex items-center overflow-hidden bg-cover bg-center bg-no-repeat rounded-2xl"
-        style={{ backgroundImage: "url('/src/assets/images/background-balance.png')" }}
+        style={{ backgroundImage: `url(${backgroundBalance})` }}
+
       >
         <div className="z-10 text-white px-5 grid gap-2">
           <p className="text-sm">Saldo anda</p>

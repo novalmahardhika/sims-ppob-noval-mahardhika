@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { Avatar, AvatarFallback, AvatarImage } from './avatar';
 import { Pencil } from 'lucide-react';
+import avatar from '../../assets/images/avatar.png'
 
 type InputFieldTProps<T extends FieldValues> = {
   name: Path<T>;
@@ -176,7 +177,7 @@ export function AvatarUploadField<T extends FieldValues>({
                 <Avatar className="w-full h-full">
                   <AvatarImage src={previewUrl || initialImage} alt="Profile preview" />
                   <AvatarFallback>
-                    <img src="/src/assets/images/avatar.png" alt="avatar" className='w-full' />
+                    <img src={avatar} alt="avatar" className='w-full' />
                   </AvatarFallback>
                 </Avatar>
 

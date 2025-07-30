@@ -1,6 +1,7 @@
 import { useAuth } from "@/lib/hooks/use-auth";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
+import illustratorImage from '../../assets/images/illustration-auth.png'
 
 export default function AuthLayout() {
   const navigate = useNavigate()
@@ -18,7 +19,7 @@ export default function AuthLayout() {
         <Outlet />
       </div>
       <div className="bg-primary-foreground relative hidden lg:flex overflow-hidden justify-end items-center">
-        <img src="/src/assets/images/illustration-auth.png" alt="illustration" className="absolute" />
+        <img src={illustratorImage} alt="illustration" className="absolute" />
       </div>
     </section>
   )

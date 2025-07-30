@@ -2,9 +2,13 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import authReducer from '@/lib/features/auth/auth-slice'
+import serviceReducer from '@/lib/features/service/service-slice'
+import bannerReducer from '@/lib/features/banner/banner-slice'
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  service: serviceReducer,
+  banner: bannerReducer,
 })
 
 const persistedReducer = persistReducer({

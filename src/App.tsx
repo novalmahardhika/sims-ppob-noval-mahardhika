@@ -4,6 +4,9 @@ import RegisterPage from './components/pages/register-page'
 import AuthLayout from './components/layouts/auth-layout'
 import MainPage from './components/pages/main-page'
 import { MainLayout } from './components/layouts/main-layout'
+import TopUpPage from './components/pages/topup-page'
+import TransactionPage from './components/pages/transaction-page'
+import AccountPage from './components/pages/account-page'
 
 function App() {
   return (
@@ -16,6 +19,9 @@ function App() {
 
         <Route element={<MainLayout />}>
           <Route index element={<MainPage />} />
+          <Route path='/topup' element={<TopUpPage />} />
+          <Route path='/transaction' element={<TransactionPage />} />
+          <Route path='/account' element={<AccountPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

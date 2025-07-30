@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { ComponentProps, ReactNode } from 'react';
 import {
   FormControl,
@@ -12,6 +12,8 @@ import { Input } from './input';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { Avatar, AvatarFallback, AvatarImage } from './avatar';
+import { Pencil } from 'lucide-react';
 
 type InputFieldTProps<T extends FieldValues> = {
   name: Path<T>;
@@ -133,6 +135,82 @@ export function RadioButtonField<T extends FieldValues>({
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           {isMessage && (<FormMessage />)}
+        </FormItem>
+      )}
+    />
+  )
+}
+
+type AvatarUploadFieldProps<T extends FieldValues> = {
+  name: Path<T>
+  label?: string
+  description?: string
+  control: Control<T>
+  initialImage?: string
+  className?: string
+} & Omit<ComponentProps<typeof Input>, 'name' | 'type'>
+
+export function AvatarUploadField<T extends FieldValues>({
+  name,
+  control,
+  label,
+  description,
+  initialImage,
+  className,
+  ...props
+}: AvatarUploadFieldProps<T>) {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+
+
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          {label && <FormLabel>{label}</FormLabel>}
+          <FormControl>
+            <div className="flex flex-col items-center gap-2 w-full">
+              <div className={cn('relative w-32 h-32', className)}>
+                <Avatar className="w-full h-full">
+                  <AvatarImage src={previewUrl || initialImage} alt="Profile preview" />
+                  <AvatarFallback>
+                    <img src="/src/assets/images/avatar.png" alt="avatar" className='w-full' />
+                  </AvatarFallback>
+                </Avatar>
+
+                <button
+                  type="button"
+                  onClick={() => inputRef.current?.click()}
+                  className="absolute bottom-0 right-1 border bg-white rounded-full p-1 shadow hover:bg-gray-100 transition"
+                >
+                  <Pencil className="w-4 h-4 text-gray-700" />
+                </button>
+              </div>
+
+              <Input
+                type="file"
+                accept=".jpg,.jpeg,.png"
+                className="hidden"
+                ref={inputRef}
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null
+                  field.onChange(file)
+                  if (file) {
+                    const imageUrl = URL.createObjectURL(file)
+                    setPreviewUrl(imageUrl)
+                  } else {
+                    setPreviewUrl(null)
+                  }
+                }}
+                {...props}
+              />
+            </div>
+          </FormControl>
+
+          {description && <FormDescription>{description}</FormDescription>}
+          <FormMessage />
         </FormItem>
       )}
     />

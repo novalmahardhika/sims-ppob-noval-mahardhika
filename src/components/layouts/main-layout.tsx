@@ -1,8 +1,20 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { Logo } from "../ui/logo";
+import { useAuth } from "@/lib/hooks/use-auth";
+import { useEffect } from "react";
 
 
 export function MainLayout() {
+
+  const navigate = useNavigate()
+  const { isLoading, isAuthenticated } = useAuth()
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      navigate('/login')
+    }
+  }, [isLoading, isAuthenticated, navigate])
+
   return (
     <div>
       <header className="h-16 border-b">

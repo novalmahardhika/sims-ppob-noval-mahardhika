@@ -6,13 +6,15 @@ import serviceReducer from '@/lib/features/service/service-slice'
 import bannerReducer from '@/lib/features/banner/banner-slice'
 import topUpReducer from '@/lib/features/topup/topup-service'
 import balanceReducer from '@/lib/features/balance/balance-slice'
+import userReducer from '@/lib/features/user/user-slice'
 
 const rootReducer = combineReducers({
   auth: authReducer,
   service: serviceReducer,
   banner: bannerReducer,
   topup: topUpReducer,
-  balance: balanceReducer
+  balance: balanceReducer,
+  user: userReducer
 })
 
 const persistedReducer = persistReducer({

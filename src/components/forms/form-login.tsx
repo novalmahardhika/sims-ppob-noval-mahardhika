@@ -10,7 +10,7 @@ import { MdLockOutline } from "react-icons/md";
 import { useAppSelector } from "@/lib/hooks/use-app-selector";
 import { useAppDispatch } from "@/lib/hooks/use-app-dispatch";
 import { Spinner } from "../ui/spinner";
-import { loginUser } from "@/lib/features/auth/auth-slice";
+import { fetchCurrentUser, loginUser } from "@/lib/features/auth/auth-slice";
 import { toast } from "sonner";
 import type { ErrorPayload } from "@/lib/types/api-type";
 
@@ -29,7 +29,7 @@ export default function FormLogin() {
     if (loginUser.fulfilled.match(result)) {
       toast.success("Register berhasil")
       form.reset()
-      navigate('/')
+      dispatch(fetchCurrentUser())
     } else {
       const error = result.payload as ErrorPayload
       toast.error(error.message)

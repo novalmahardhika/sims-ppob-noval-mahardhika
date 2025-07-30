@@ -1,6 +1,11 @@
+import { FormUpdateProfile } from "../forms/form-update-profile";
 
 export default function AccountPage() {
+
+
   return (
-    <div>AccountPage</div>
+    <section className="flex justify-center">
+      <FormUpdateProfile />
+    </section>
   )
 }

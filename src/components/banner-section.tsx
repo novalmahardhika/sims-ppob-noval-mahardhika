@@ -4,14 +4,28 @@ import { useAppSelector } from "@/lib/hooks/use-app-selector"
 import { useEffect } from "react"
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
+import { BannerSkeleton } from "./skeletons/banner-skeleton"
 
 export function BannerSection() {
   const dispatch = useAppDispatch()
-  const { banners } = useAppSelector((state) => state.banner)
+  const { isLoading, banners } = useAppSelector((state) => state.banner)
 
   useEffect(() => {
     dispatch(fetchBanner())
   }, [dispatch])
+
+  if (isLoading) {
+    return (
+      <section className="grid gap-3">
+        <h2 className="font-medium">Temukan promo menarik</h2>
+        <div className="flex basis-1/4 gap-3">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <BannerSkeleton key={`banner-load-${index}`} />
+          ))}
+        </div>
+      </section>
+    )
+  }
 
 
   return (

@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 
 export function MainLayout() {
-
   const navigate = useNavigate()
   const { isLoading, isAuthenticated } = useAuth()
 

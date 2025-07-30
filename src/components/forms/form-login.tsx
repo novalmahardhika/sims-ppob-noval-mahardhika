@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "../ui/form";
 import { InputField } from "../ui/form-field";
 import { Button } from "../ui/button";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { loginDefaultValues, loginSchema, type LoginSchemaType } from "@/lib/schemas/login-schema";
 import { IoIosAt } from "react-icons/io";
 import { MdLockOutline } from "react-icons/md";
@@ -18,7 +18,6 @@ import type { ErrorPayload } from "@/lib/types/api-type";
 export default function FormLogin() {
   const dispatch = useAppDispatch()
   const { isLoading } = useAppSelector((state) => state.auth)
-  const navigate = useNavigate()
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: loginDefaultValues

@@ -1,16 +1,23 @@
 import { cn } from "@/lib/utils";
 
 type LogoProps = {
-  className?: string
-  logoClassName?: string
-  textClassName?: string
+  size?: 'sm' | 'base'
 }
 
-export function Logo({ className, logoClassName, textClassName }: LogoProps) {
+export function Logo({ size = 'base' }: LogoProps) {
   return (
-    <span className={cn('flex gap-2 items-center', className)}>
-      <img src="/src/assets/images/logo-sims.png" alt="logo" className={cn('', logoClassName)} />
-      <h1 className={cn('font-semibold text-xl', textClassName)}>SIMS PPOB</h1>
+    <span className='flex gap-1.5 items-center'>
+      <img
+        src="/src/assets/images/logo-sims.png"
+        alt="logo"
+        className={cn('w-7 aspect-square', size === 'sm' && 'w-6')}
+      />
+      <h1
+        className={cn('font-semibold text-xl', size === 'sm' && 'text-lg')}
+      >
+        SIMS PPOB
+      </h1>
     </span>
   )
 }
+

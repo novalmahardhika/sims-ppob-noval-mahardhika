@@ -1,9 +1,20 @@
 import { useAuth } from "@/lib/hooks/use-auth"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { FiEye } from "react-icons/fi"
+import { useAppDispatch } from "@/lib/hooks/use-app-dispatch"
+import { useAppSelector } from "@/lib/hooks/use-app-selector"
+import { formatCurrency } from "@/lib/format"
+import { useEffect } from "react"
+import { fetchBalance } from "@/lib/features/balance/balance-slice"
 
 export function UserInfo() {
   const { user } = useAuth()
+  const dispatch = useAppDispatch()
+  const { balance } = useAppSelector((state) => state.balance)
+
+  useEffect(() => {
+    dispatch(fetchBalance())
+  }, [dispatch])
 
   return (
     <header className="grid md:grid-cols-2">
@@ -26,10 +37,10 @@ export function UserInfo() {
       >
         <div className="z-10 text-white px-5 grid gap-2">
           <p className="text-sm">Saldo anda</p>
-          <h1 className="font-medium text-2xl">Rp 0</h1>
+          <h1 className="font-medium text-2xl">{formatCurrency(balance)}</h1>
           <div className="flex items-center text-xs justify-between bg-primary py-1 gap-1.5">
             <span>Tutup Saldo</span>
-            <button aria-label="Toggle visibility saldo">
+            <button aria-label="Toggle visibility">
               <FiEye />
             </button>
           </div>

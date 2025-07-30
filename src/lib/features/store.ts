@@ -4,11 +4,15 @@ import storage from 'redux-persist/lib/storage'
 import authReducer from '@/lib/features/auth/auth-slice'
 import serviceReducer from '@/lib/features/service/service-slice'
 import bannerReducer from '@/lib/features/banner/banner-slice'
+import topUpReducer from '@/lib/features/topup/topup-service'
+import balanceReducer from '@/lib/features/balance/balance-slice'
 
 const rootReducer = combineReducers({
   auth: authReducer,
   service: serviceReducer,
   banner: bannerReducer,
+  topup: topUpReducer,
+  balance: balanceReducer
 })
 
 const persistedReducer = persistReducer({

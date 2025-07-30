@@ -79,3 +79,62 @@ export function InputField<T extends FieldValues>({
     />
   );
 }
+
+
+type RadioButtonFieldProps<T extends FieldValues> = {
+  name: Path<T>
+  label?: string
+  description?: string
+  control: Control<T>
+  options: { label: string; value: number | string }[]
+  className?: string
+  isMessage?: boolean
+} & Omit<ComponentProps<'button'>, 'name'>
+
+export function RadioButtonField<T extends FieldValues>({
+  name,
+  label,
+  control,
+  options,
+  description,
+  className,
+  isMessage,
+  ...props
+}: RadioButtonFieldProps<T>) {
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          {label && <FormLabel>{label}</FormLabel>}
+          <FormControl>
+            <div className={cn('grid grid-cols-3 gap-3', className)}>
+              {options.map((option) => {
+                const isActive = field.value === option.value
+                return (
+                  <button
+                    type="button"
+                    key={option.value}
+                    onClick={() => field.onChange(option.value)}
+                    className={cn(
+                      'rounded-md border text-sm font-medium text-center transition-all',
+                      isActive
+                        ? 'bg-primary text-white ring-2 ring-primary border-primary'
+                        : 'bg-white text-black border-gray-300 hover:ring-1 hover:ring-primary'
+                    )}
+                    {...props}
+                  >
+                    {option.label}
+                  </button>
+                )
+              })}
+            </div>
+          </FormControl>
+          {description && <FormDescription>{description}</FormDescription>}
+          {isMessage && (<FormMessage />)}
+        </FormItem>
+      )}
+    />
+  )
+}

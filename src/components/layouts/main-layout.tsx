@@ -6,13 +6,13 @@ import { useEffect } from "react";
 
 export function MainLayout() {
   const navigate = useNavigate()
-  const { isLoading, isAuthenticated } = useAuth()
+  const { isLoading, token } = useAuth()
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isLoading && !token) {
       navigate('/login')
     }
-  }, [isLoading, isAuthenticated, navigate])
+  }, [isLoading, token, navigate])
 
   return (
     <div>

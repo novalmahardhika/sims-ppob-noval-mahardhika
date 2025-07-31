@@ -5,13 +5,13 @@ import illustratorImage from '../../assets/images/illustration-auth.png'
 
 export default function AuthLayout() {
   const navigate = useNavigate()
-  const { isLoading, isAuthenticated } = useAuth()
+  const { isLoading, token } = useAuth()
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated) {
+    if (!isLoading && token) {
       navigate('/')
     }
-  }, [isLoading, isAuthenticated, navigate])
+  }, [isLoading, token, navigate])
 
   return (
     <section className="grid min-h-svh lg:grid-cols-2">

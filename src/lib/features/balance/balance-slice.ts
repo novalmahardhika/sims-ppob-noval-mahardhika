@@ -9,14 +9,16 @@ type InitialStateType = {
   transactions: TransactionType[]
   balance: number
   isLoading: boolean
-  isHidden: boolean
+  offset: number
+  limit: number
 }
 
 const initialState: InitialStateType = {
   transactions: [],
   balance: 0,
   isLoading: false,
-  isHidden: false
+  offset: 0,
+  limit: 5
 }
 
 export const paymentService = createAsyncThunk('/payment', async (data: PaymentSchemaType, { rejectWithValue }) => {
@@ -47,9 +49,9 @@ export const fetchBalance = createAsyncThunk('/balance', async (_, { rejectWithV
   }
 })
 
-export const fetchHistoryTransaction = createAsyncThunk('/transaction/history', async (_, { rejectWithValue }) => {
+export const fetchHistoryTransaction = createAsyncThunk('/transaction/history', async (params: { offset: number; limit: number }, { rejectWithValue }) => {
   try {
-    const res = await api.get<ApiResponse<ResponseTransactionType>>('/transaction/history')
+    const res = await api.get<ApiResponse<ResponseTransactionType>>('/transaction/history', { params })
     return res.data.data
   } catch (e: unknown) {
     const error = e as AxiosError<ApiResponse>
@@ -63,7 +65,12 @@ export const fetchHistoryTransaction = createAsyncThunk('/transaction/history', 
 const balanceSlice = createSlice({
   name: 'balance',
   initialState,
-  reducers: {},
+  reducers: {
+    resetTransactions(state) {
+      state.transactions = []
+      state.offset = 0
+    }
+  },
   extraReducers: (builder) => {
     // FETCH BALANCE FLOW
     builder
@@ -96,8 +103,11 @@ const balanceSlice = createSlice({
         state.isLoading = true
       })
       .addCase(fetchHistoryTransaction.fulfilled, (state, action) => {
+        // state.isLoading = false
+        // state.transactions = action.payload.records
         state.isLoading = false
-        state.transactions = action.payload.records
+        state.transactions = [...state.transactions, ...action.payload.records]
+        state.offset += state.limit
       })
       .addCase(fetchHistoryTransaction.rejected, (state) => {
         state.isLoading = false
@@ -105,5 +115,7 @@ const balanceSlice = createSlice({
 
   }
 })
+
+export const { resetTransactions } = balanceSlice.actions
 
 export default balanceSlice.reducer

@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 
-export function formatCurrency(value?: number = 0): string {
+export function formatCurrency(value: number = 0): string {
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',

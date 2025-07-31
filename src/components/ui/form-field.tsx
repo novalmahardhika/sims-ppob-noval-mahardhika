@@ -46,7 +46,7 @@ export function InputField<T extends FieldValues>({
       render={({ field }) => (
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}
-          <FormControl>
+          <FormControl >
             <div className="relative">
               {icon && (
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -55,7 +55,7 @@ export function InputField<T extends FieldValues>({
               )}
               <Input
                 type={inputType}
-                className={cn(
+                className={cn("py-5",
                   icon && 'pl-10',
                   isPassword && 'pr-10',
                   className
@@ -121,7 +121,7 @@ export function RadioButtonField<T extends FieldValues>({
                     key={option.value}
                     onClick={() => field.onChange(option.value)}
                     className={cn(
-                      'rounded-md border text-sm font-medium text-center transition-all',
+                      'rounded border text-sm font-medium text-center transition-all py-2.5',
                       isActive
                         ? 'bg-primary text-white ring-2 ring-primary border-primary'
                         : 'bg-white text-black border-gray-300 hover:ring-1 hover:ring-primary'

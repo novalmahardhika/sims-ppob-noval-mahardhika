@@ -43,7 +43,7 @@ export function UserInfo() {
         <div className="z-10 text-white px-5 grid gap-2">
           <p className="text-sm">Saldo anda</p>
           {isBalanceHidden ? (<h1 className="font-medium text-2xl">{formatCurrency(balance)}</h1>) : (<HideBalance />)}
-          <button className="bg-primary text-xs flex items-center gap-2 w-28 py-1" onClick={() => dispatch(toggleHiddenBalance())}>
+          <button className="bg-primary text-xs flex items-center gap-2 w-28 py-1 cursor-pointer" onClick={() => dispatch(toggleHiddenBalance())}>
             <span>{isBalanceHidden ? "Tutup Saldo" : 'Lihat Saldo'}</span>
             <FiEye />
           </button>

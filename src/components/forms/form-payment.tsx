@@ -40,7 +40,7 @@ export function FormPayment({ item }: FormPaymentProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="w-full grid gap-3">
         <InputField control={form.control} name="amount" icon={<LiaCcMastercard />} readOnly />
-        <Button>{
+        <Button >{
           isLoading ? <Spinner /> : 'Bayar'}</Button>
       </form>
     </Form>

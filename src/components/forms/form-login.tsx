@@ -26,7 +26,7 @@ export default function FormLogin() {
   const submitHandler = async (values: LoginSchemaType) => {
     const result = await dispatch(loginUser(values))
     if (loginUser.fulfilled.match(result)) {
-      toast.success("Register berhasil")
+      toast.success("Login berhasil")
       form.reset()
       await dispatch(fetchCurrentUser())
     } else {

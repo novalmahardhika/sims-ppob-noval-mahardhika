@@ -85,15 +85,15 @@ export function FormUpdateProfile() {
           label="Nama Belakang" />
         {
           isEdit ? (
-            <Button disabled={isLoading}>
+            <Button disabled={isLoading} >
               {isLoading ? <Spinner /> : 'Simpan'}
             </Button>
           ) : (
             <>
-              <Button type="button" disabled={isLoading} onClick={() => setIsEdit(!isEdit)}>
+              <Button type="button" disabled={isLoading} onClick={() => setIsEdit(!isEdit)} >
                 {isLoading ? <Spinner /> : 'Edit Profile'}
               </Button>
-              <Button type="button" variant={'outline'} className="text-primary border-primary hover:text-red-800" disabled={isLoading} onClick={logoutHandler}>
+              <Button type="button" variant={'outline'} className="text-primary border-primary hover:text-red-800 " disabled={isLoading} onClick={logoutHandler}>
                 Logout
               </Button>
             </>

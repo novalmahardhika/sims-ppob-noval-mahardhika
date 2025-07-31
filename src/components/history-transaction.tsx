@@ -1,19 +1,27 @@
-import { fetchHistoryTransaction } from "@/lib/features/balance/balance-slice"
+import { fetchHistoryTransaction, resetTransactions } from "@/lib/features/balance/balance-slice"
 import { formatCurrency, formatLocaleDate } from "@/lib/format"
 import { useAppDispatch } from "@/lib/hooks/use-app-dispatch"
 import { useAppSelector } from "@/lib/hooks/use-app-selector"
 import { cn } from "@/lib/utils"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
+import { Button } from "./ui/button"
 
 export function HistoryTransactionSection() {
   const dispatch = useAppDispatch()
-  const { transactions } = useAppSelector((state) => state.balance)
-
+  const { transactions, offset, limit, isLoading } = useAppSelector((state) => state.balance)
+  const hasFetched = useRef(false)
 
   useEffect(() => {
-    dispatch(fetchHistoryTransaction())
-  }, [dispatch])
+    if (hasFetched.current) return
+    hasFetched.current = true
 
+    dispatch(resetTransactions())
+    dispatch(fetchHistoryTransaction({ offset: 0, limit }))
+  }, [dispatch, limit])
+
+  const handleShowMore = () => {
+    dispatch(fetchHistoryTransaction({ offset, limit }))
+  }
   return (
     <section className="grid gap-3">
       <h1 className="font-medium">Semua Transaksi</h1>
@@ -27,10 +35,21 @@ export function HistoryTransactionSection() {
               <p className="text-xs text-muted-foreground">{formatLocaleDate(item.created_on)}</p>
             </span>
 
-            <span className="text-xs" >{item.description}</span>
+            <span className="text-sm" >{item.description}</span>
           </div>
         ))}
       </section>
+
+      <div className="my-6 text-center">
+        <Button
+          variant={'ghost'}
+          onClick={handleShowMore}
+          disabled={isLoading}
+          className="text-primary hover:text-primary/80"
+        >
+          {isLoading ? 'Loading...' : 'Show More'}
+        </Button>
+      </div>
     </section>
   )
 }

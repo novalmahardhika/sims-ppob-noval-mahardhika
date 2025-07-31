@@ -7,6 +7,7 @@ import { MainLayout } from './components/layouts/main-layout'
 import TopUpPage from './components/pages/topup-page'
 import TransactionPage from './components/pages/transaction-page'
 import AccountPage from './components/pages/account-page'
+import PaymentPage from './components/pages/payment-page'
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
         <Route element={<MainLayout />}>
           <Route index element={<MainPage />} />
           <Route path='/topup' element={<TopUpPage />} />
-          <Route path='/transaction' element={<TransactionPage />} />
           <Route path='/account' element={<AccountPage />} />
+          <Route path='/transaction' element={<TransactionPage />} />
+          <Route path='/transaction/:id' element={<PaymentPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

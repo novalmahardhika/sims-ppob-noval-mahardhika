@@ -3,10 +3,12 @@ import { fetchService } from "@/lib/features/service/service-slice"
 import { useAppDispatch } from "@/lib/hooks/use-app-dispatch"
 import { useAppSelector } from "@/lib/hooks/use-app-selector"
 import { ServiceSkeleton } from "./skeletons/service-skeleton"
+import { useNavigate } from "react-router"
 
 export function ServiceSection() {
   const dispatch = useAppDispatch()
   const { isLoading, services } = useAppSelector((state) => state.service)
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(fetchService())
@@ -26,9 +28,10 @@ export function ServiceSection() {
   return (
     <section className="grid grid-cols-12 gap-3">
       {services.map((service, index) => (
-        <div
+        <button
           key={`service-item-${index}`}
-          className="col-span-1 flex flex-col items-center text-center "
+          className="col-span-1 flex flex-col items-center text-center cursor-pointer"
+          onClick={() => navigate(`/transaction/${service.service_code}`)}
         >
           <div className="w-full aspect-square flex items-center justify-center">
             <img
@@ -40,7 +43,7 @@ export function ServiceSection() {
           <span className="text-xs w-full">
             {service.service_name}
           </span>
-        </div>
+        </button>
       ))}
     </section>
   )

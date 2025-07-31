@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "../ui/form";
 import { InputField } from "../ui/form-field";
 import { Button } from "../ui/button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { loginDefaultValues, loginSchema, type LoginSchemaType } from "@/lib/schemas/login-schema";
 import { IoIosAt } from "react-icons/io";
 import { MdLockOutline } from "react-icons/md";
@@ -17,6 +17,7 @@ import type { ErrorPayload } from "@/lib/types/api-type";
 
 export default function FormLogin() {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate();
   const { isLoading } = useAppSelector((state) => state.auth)
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -29,6 +30,7 @@ export default function FormLogin() {
       toast.success("Login berhasil")
       form.reset()
       await dispatch(fetchCurrentUser())
+      navigate(0)
     } else {
       const error = result.payload as ErrorPayload
       toast.error(error.message)

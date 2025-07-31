@@ -17,7 +17,7 @@ export function ServiceSection() {
 
   if (isLoading) {
     return (
-      <section className="grid grid-cols-12 gap-3">
+      <section className="grid grid-cols-3 sm:grid-cols-6 xl:grid-cols-12 gap-3">
         {Array.from({ length: 12 }).map((_, index) => (
           <ServiceSkeleton key={`service-load-${index}`} />
         ))}
@@ -26,7 +26,7 @@ export function ServiceSection() {
   }
 
   return (
-    <section className="grid grid-cols-12 gap-3">
+    <section className="grid grid-cols-3 sm:grid-cols-6 xl:grid-cols-12 gap-3">
       {services.map((service, index) => (
         <button
           key={`service-item-${index}`}

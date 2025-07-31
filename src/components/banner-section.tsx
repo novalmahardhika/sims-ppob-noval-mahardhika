@@ -18,7 +18,7 @@ export function BannerSection() {
     return (
       <section className="grid gap-3">
         <h2 className="font-medium">Temukan promo menarik</h2>
-        <div className="flex basis-1/4 gap-3">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, index) => (
             <BannerSkeleton key={`banner-load-${index}`} />
           ))}
@@ -26,7 +26,6 @@ export function BannerSection() {
       </section>
     )
   }
-
 
   return (
     <section className="grid gap-3">
@@ -43,9 +42,9 @@ export function BannerSection() {
         }}
         className="w-full"
       >
-        <CarouselContent >
+        <CarouselContent className="">
           {banners.map((banner, index) => (
-            <CarouselItem key={`banner-item-${index}`} className=" sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+            <CarouselItem key={`banner-item-${index}`} className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 flex justify-center items-center">
               <div className="p-1">
                 <img src={banner.banner_image} />
               </div>

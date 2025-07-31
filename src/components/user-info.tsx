@@ -22,7 +22,7 @@ export function UserInfo() {
   }, [dispatch])
 
   return (
-    <header className="grid md:grid-cols-2">
+    <header className="grid md:grid-cols-2 md:gap-0 gap-6">
       <section className="grid gap-3">
         <Avatar className="w-12 h-12">
           <AvatarImage src={user?.profile_image} className="w-20 aspect-square" />

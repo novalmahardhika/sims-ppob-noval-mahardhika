@@ -5,6 +5,7 @@ import { useAppSelector } from "@/lib/hooks/use-app-selector"
 import { cn } from "@/lib/utils"
 import { useEffect, useRef } from "react"
 import { Button } from "./ui/button"
+import { Skeleton } from "./ui/skeleton"
 
 export function HistoryTransactionSection() {
   const dispatch = useAppDispatch()
@@ -22,6 +23,23 @@ export function HistoryTransactionSection() {
   const handleShowMore = () => {
     dispatch(fetchHistoryTransaction({ offset, limit }))
   }
+
+  if (isLoading) {
+    return (<section className="grid gap-3">
+      <h1 className="font-medium">Semua Transaksi</h1>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <Skeleton className="rounded p-9" key={`history-load-${index}`} />
+      ))}
+    </section>)
+  }
+
+  if (transactions.length === 0) {
+    return (<section className="grid gap-14">
+      <h1 className="font-medium">Semua Transaksi</h1>
+      <span className="text-center text-muted-foreground/60">Maaf tidak ada history transaksi</span>
+    </section>)
+  }
+
   return (
     <section className="grid gap-3">
       <h1 className="font-medium">Semua Transaksi</h1>
@@ -34,7 +52,6 @@ export function HistoryTransactionSection() {
               )}>{`${item.transaction_type === 'TOPUP' ? "+" : "-"} ${formatCurrency(item.total_amount)}`}</h2>
               <p className="text-xs text-muted-foreground">{formatLocaleDate(item.created_on)}</p>
             </span>
-
             <span className="text-sm" >{item.description}</span>
           </div>
         ))}

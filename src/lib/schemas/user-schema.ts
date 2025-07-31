@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg"]
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"]
 
 export const updateProfileSchema = z.object({
   first_name: z.string().min(1, { message: "First name is required" }),
@@ -12,7 +12,7 @@ export const updateProfileSchema = z.object({
       message: "Image must be smaller than 100KB",
     })
     .refine(file => ACCEPTED_IMAGE_TYPES.includes(file.type), {
-      message: "Only .jpg, .jpeg or .png files are allowed",
+      message: "Only .jpeg or .png files are allowed",
     })
     .or(z.literal(null))
 })

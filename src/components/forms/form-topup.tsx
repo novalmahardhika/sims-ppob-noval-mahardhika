@@ -26,7 +26,7 @@ export function FormTopUp() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitHandler)} className="w-full md:grid grid-cols-2 gap-3 mt-6">
+      <form onSubmit={form.handleSubmit(submitHandler)} className="w-full grid md:grid-cols-2 gap-3 mt-6">
         <div className="w-full grid gap-3">
           <InputField control={form.control} name="top_up_amount" placeholder="masukan nominal Top Up" type="number" icon={<LiaCcMastercard />} />
           <Button

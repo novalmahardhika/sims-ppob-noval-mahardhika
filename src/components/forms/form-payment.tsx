@@ -9,10 +9,8 @@ import { paymentDefaultValues, paymentSchema, type PaymentSchemaType } from "@/l
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LiaCcMastercard } from "react-icons/lia";
 import { useEffect } from "react";
-import { toast } from "sonner";
-import { fetchBalance, paymentService } from "@/lib/features/balance/balance-slice";
-import type { ErrorPayload } from "@/lib/types/api-type";
 import type { ServiceType } from "@/lib/types/service-type";
+import { openModal } from "@/lib/features/ui/ui-slice";
 
 type FormPaymentProps = {
   item: ServiceType
@@ -33,19 +31,9 @@ export function FormPayment({ item }: FormPaymentProps) {
     }
   }, [form, item]);
 
-  const submitHandler = async (values: PaymentSchemaType) => {
-    const result = await dispatch(paymentService(values))
-    if (paymentService.fulfilled.match(result)) {
-      toast.success("Top Up berhasil")
-      dispatch(fetchBalance())
-    } else {
-      const error = result.payload as ErrorPayload
-      if (error.status === 401) {
-        toast.error('Unauthorized')
-        return
-      }
-      toast.error(error.message)
-    }
+  const submitHandler = async () => {
+    dispatch(openModal({ name: 'payment', props: item }))
+
   }
 
   return (

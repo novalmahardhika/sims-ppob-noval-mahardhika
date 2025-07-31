@@ -9,12 +9,14 @@ type InitialStateType = {
   transactions: TransactionType[]
   balance: number
   isLoading: boolean
+  isHidden: boolean
 }
 
 const initialState: InitialStateType = {
   transactions: [],
   balance: 0,
-  isLoading: false
+  isLoading: false,
+  isHidden: false
 }
 
 export const paymentService = createAsyncThunk('/payment', async (data: PaymentSchemaType, { rejectWithValue }) => {

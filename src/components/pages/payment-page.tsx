@@ -3,6 +3,7 @@ import { FormPayment } from "../forms/form-payment";
 import { UserInfo } from "../user-info";
 import { useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
+import { ModalPayment } from "../modals/modal-payment";
 
 export default function PaymentPage() {
   const { id } = useParams<{ id: string }>()
@@ -27,6 +28,7 @@ export default function PaymentPage() {
         </div>
       </div>
       <FormPayment item={item} />
+      <ModalPayment />
     </section>
   )
 }

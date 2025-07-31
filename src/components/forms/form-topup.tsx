@@ -7,12 +7,9 @@ import { Spinner } from "../ui/spinner";
 import { Button } from "../ui/button";
 import { useAppDispatch } from "@/lib/hooks/use-app-dispatch";
 import { useAppSelector } from "@/lib/hooks/use-app-selector";
-import { topUpBalance } from "@/lib/features/topup/topup-service";
-import { toast } from "sonner";
-import type { ErrorPayload } from "@/lib/types/api-type";
 import { NOMINAL_OPTIONS } from "@/lib/constants";
-import { fetchBalance } from "@/lib/features/balance/balance-slice";
-
+import { openModal } from "@/lib/features/ui/ui-slice";
+import { LiaCcMastercard } from "react-icons/lia";
 
 export function FormTopUp() {
   const dispatch = useAppDispatch()
@@ -22,19 +19,7 @@ export function FormTopUp() {
   })
 
   const submitHandler = async (values: TopUpSchemaType) => {
-    const result = await dispatch(topUpBalance(values))
-    if (topUpBalance.fulfilled.match(result)) {
-      toast.success("Top Up berhasil")
-      form.reset()
-      dispatch(fetchBalance())
-    } else {
-      const error = result.payload as ErrorPayload
-      if (error.status === 401) {
-        toast.error('Unauthorized')
-        return
-      }
-      toast.error(error.message)
-    }
+    dispatch(openModal({ name: 'topUp', props: values }))
   }
 
   const nominal = form.watch('top_up_amount')
@@ -43,7 +28,7 @@ export function FormTopUp() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="w-full md:grid grid-cols-2 gap-3 mt-6">
         <div className="w-full grid gap-3">
-          <InputField control={form.control} name="top_up_amount" placeholder="masukan nominal Top Up" type="number" />
+          <InputField control={form.control} name="top_up_amount" placeholder="masukan nominal Top Up" type="number" icon={<LiaCcMastercard />} />
           <Button
             className=" disabled:bg-zinc-400 disabled:cursor-not-allowed"
             disabled={isLoading || !nominal}

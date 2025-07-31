@@ -18,4 +18,5 @@ export type TransactionType = {
 export type ResponseTransactionType = {
   limit: number
   offset: number
+  records: TransactionType[]
 }

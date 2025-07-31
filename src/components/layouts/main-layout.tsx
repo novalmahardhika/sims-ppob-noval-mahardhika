@@ -18,8 +18,8 @@ export function MainLayout() {
     <div>
       <header className="h-16 border-b">
         <nav className="h-full px-3 xl:px-0 max-w-6xl mx-auto flex justify-between items-center">
-          <Logo size="sm" />
-          <span className="flex gap-8 font-medium">
+          <Logo size="sm" href="/" className="cursor-pointer" />
+          <span className="flex gap-8 font-medium text-sm">
             <Link to="/topup">Top Up</Link>
             <Link to="/transaction">Transaction</Link>
             <Link to="/account">Akun</Link>

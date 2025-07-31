@@ -8,7 +8,7 @@ import { MdPersonOutline } from "react-icons/md";
 import { Spinner } from "../ui/spinner";
 import { Form } from "../ui/form";
 import { useAuth } from "@/lib/hooks/use-auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { updateProfile } from "@/lib/features/user/user-slice";
 import { useAppDispatch } from "@/lib/hooks/use-app-dispatch";
 import { useAppSelector } from "@/lib/hooks/use-app-selector";
@@ -20,6 +20,7 @@ export function FormUpdateProfile() {
   const { user } = useAuth()
   const dispatch = useAppDispatch()
   const { isLoading } = useAppSelector((state) => state.user)
+  const [isEdit, setIsEdit] = useState<boolean>(false)
   const form = useForm<UpdateProfileSchemaType>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: updateProfileDefaultValues,
@@ -37,6 +38,7 @@ export function FormUpdateProfile() {
       toast.success("Top Up berhasil")
       form.reset()
       dispatch(fetchCurrentUser())
+      setIsEdit(false)
     } else {
       const error = result.payload as ErrorPayload
       if (error.status === 401) {
@@ -81,12 +83,23 @@ export function FormUpdateProfile() {
           placeholder="nama belakang"
           icon={<MdPersonOutline />}
           label="Nama Belakang" />
-        <Button variant={'outline'} className="text-primary border-primary hover:text-red-800" disabled={isLoading}>
-          {isLoading ? <Spinner /> : 'Edit Profile'}
-        </Button>
-        <Button type="button" disabled={isLoading} onClick={logoutHandler}>
-          Logout
-        </Button>
+        {
+          isEdit ? (
+            <Button disabled={isLoading}>
+              {isLoading ? <Spinner /> : 'Simpan'}
+            </Button>
+          ) : (
+            <>
+              <Button type="button" disabled={isLoading} onClick={() => setIsEdit(!isEdit)}>
+                {isLoading ? <Spinner /> : 'Edit Profile'}
+              </Button>
+              <Button type="button" variant={'outline'} className="text-primary border-primary hover:text-red-800" disabled={isLoading} onClick={logoutHandler}>
+                Logout
+              </Button>
+            </>
+          )
+        }
+
       </form>
     </Form>
   )

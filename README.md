@@ -1,69 +1,47 @@
-# React + TypeScript + Vite
+# Nutect Frontend Engineer Technical Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a frontend implementation for a technical test as a **Frontend Engineer** candidate at **Nutect**. It focuses on building a clean, scalable, and well-structured application using modern React ecosystem tools.
 
-Currently, two official plugins are available:
+## 🛠 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React** — Component-based UI library
+- **Tailwind CSS** — Utility-first CSS framework for styling
+- **Redux Toolkit** — State management with slices and async thunks
+- **React Hook Form** — Form management and validation
+- **Zod** — Schema validation integrated with React Hook Form
+- **TypeScript** — Type-safe development
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Features
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. **User Registration** — Sign up with name, email, password, and address.
+2. **User Login** — Login with persisted token (via Redux + localStorage).
+3. **View Profile** — View authenticated user's profile data.
+4. **Update Profile Data** — Edit first name, last name, email, and address.
+5. **Update Profile Picture** — Upload and preview profile image.
+6. **Top Up** — Simulate balance top-up via modal.
+7. **Payment** — Pay a simulated bill or service from your balance.
+8. **Transaction History** — View paginated list of top-ups and payments.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🖼️ Screenshots
+
+![Screenshot of the App](./public/image.png)
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/novalmahardhika/sims-ppob-noval-mahardhika.git
+cd sims-ppob-noval-mahardhika
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚒️ Deployment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This project is deployed on **Vercel** and accessible via the following link:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+🔗 [Live Demo on Vercel](https://sims-ppob-noval-mahardhika.vercel.app)

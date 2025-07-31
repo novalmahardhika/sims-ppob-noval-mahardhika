@@ -1,16 +1,18 @@
 import { api } from "@/lib/api"
 import type { PaymentSchemaType } from "@/lib/schemas/payment-schema"
 import type { ApiResponse } from "@/lib/types/api-type"
-import type { PaymentType } from "@/lib/types/transaction-type"
+import type { PaymentType, ResponseTransactionType, TransactionType } from "@/lib/types/transaction-type"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { AxiosError } from "axios"
 
 type InitialStateType = {
+  transactions: TransactionType[]
   balance: number
   isLoading: boolean
 }
 
 const initialState: InitialStateType = {
+  transactions: [],
   balance: 0,
   isLoading: false
 }
@@ -33,6 +35,19 @@ export const paymentService = createAsyncThunk('/payment', async (data: PaymentS
 export const fetchBalance = createAsyncThunk('/balance', async (_, { rejectWithValue }) => {
   try {
     const res = await api.get<ApiResponse<{ balance: number }>>('/balance')
+    return res.data.data
+  } catch (e: unknown) {
+    const error = e as AxiosError<ApiResponse>
+    return rejectWithValue({
+      status: error.response?.status || 500,
+      message: error.response?.data.message || 'Terjadi kesalahan, silahkan coba lagi!'
+    })
+  }
+})
+
+export const fetchHistoryTransaction = createAsyncThunk('/transaction/history', async (_, { rejectWithValue }) => {
+  try {
+    const res = await api.get<ApiResponse<ResponseTransactionType>>('/transaction/history')
     return res.data.data
   } catch (e: unknown) {
     const error = e as AxiosError<ApiResponse>
@@ -70,6 +85,19 @@ const balanceSlice = createSlice({
         state.isLoading = false
       })
       .addCase(paymentService.rejected, (state) => {
+        state.isLoading = false
+      })
+
+    // FETCH HISTORY TRANSACTION FLOW
+    builder
+      .addCase(fetchHistoryTransaction.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(fetchHistoryTransaction.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.transactions = action.payload.records
+      })
+      .addCase(fetchHistoryTransaction.rejected, (state) => {
         state.isLoading = false
       })
 

@@ -6,3 +6,16 @@ export type PaymentType = {
   total_amount: number
   created_on: string
 }
+
+export type TransactionType = {
+  invoice_number: string
+  transaction_type: string
+  description: string
+  total_amount: number
+  created_on: string
+}
+
+export type ResponseTransactionType = {
+  limit: number
+  offset: number
+}
